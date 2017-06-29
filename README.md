@@ -8,9 +8,7 @@ This script will prevent you from blowing away data inside your `$HOME/.kube/con
 
 ## script
 
-Put `kcfg.sh` in your path. If `/usr/local/bin` is in your path then something like this will work:
-
-    ln -s $(PWD)/kcfg.sh /usr/local/bin/kcfg
+    install ktx ~/bin
 
 ## PS1
 
@@ -22,3 +20,8 @@ Here is a sample:
 
     export PS1="\$(basename \$(readlink $HOME/.kube/config)) \h:\W \u\$ "
 
+# TODO
+
+* bash completion
+* list available contexts
+* command to save current config if it isn't a symlink

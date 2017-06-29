@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 
-# DEFINED IN .bash_profile so you don't have to source this. CURRENT_CLUSTER_FILE=~/.kube/current-cluster
-
-if [ "$#" != 1 ]
-then
-  echo "Usage: setcluster <cluster-name>"
+if [ "$#" != 1 ]; then
+  echo "Usage: ktx <cluster-name>"
   exit 1
 fi
 
