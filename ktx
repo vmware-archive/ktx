@@ -12,10 +12,10 @@ if [ ! -L $HOME/.kube/config ]; then
 fi
 
 # if file doesn't exist bail
-if [ -f $1 ]; then
+if [ ! -e $HOME/.kube/$1 ]; then
     echo "$HOME/.kube/${1} does not exist."
     exit 1
 fi
 
 # TODO: Autocomplete on real files in this dir.
-ln -sf ~/.kube/${1} ~/.kube/config
+ln -sf $HOME/.kube/${1} $HOME/.kube/config
