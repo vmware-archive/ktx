@@ -14,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-main() {
-    # TODO: ensure the file actually exists.
-    echo "export KUBECONFIG=\"${HOME}/.kube/${1}\""
+KUBECONFIG_DIR=${KUBECONFIG_DIR:-"${HOME}/.kube/"}
+_ktx() {
+       local cur=${COMP_WORDS[COMP_CWORD]}
+       COMPREPLY=( $(compgen -W "$(ls ${KUBECONFIG_DIR})" -- $cur) )
 }
-main ${1}
+complete -F _ktx ktx
