@@ -1,10 +1,10 @@
-# How it works 
+# How it works
 
-The idea is to keep one cluster in one kubernetes config file and soft link the `.kube/config` file between cluster configs.
+The idea is to keep one cluster in one kubernetes config file and have an easy way to switch between clusters.
 
-This script will prevent you from blowing away data inside your `$HOME/.kube/config` file as it checks to make sure that file is a symlink and bails if it is not.
+Since you may want several environments (terminals) configured for different clusters we want to use the `KUBECONFIG` environment variable to identify the configured cluster.
 
-# Installing
+# Installation
 
 ## script
 
@@ -12,16 +12,22 @@ This script will prevent you from blowing away data inside your `$HOME/.kube/con
 
 ## PS1
 
-It is very helpful to have your `$PS1` display which cluster is active. You can add `\$(basename \$(readlink $HOME/.kube/config))` to your `$PS1` (in your .bash_profile). 
+It is very helpful to have your `$PS1` display which cluster is active. You can add `\$(basename \${KUBECONFIG})` to your `$PS1` (in your .bash_profile).
 
 Note: The backslashes are very important. The bash command will be executed every time it is needed instead of evaluated once and cached.
 
 Here is a sample:
 
-    export PS1="\$(basename \$(readlink $HOME/.kube/config)) \h:\W \u\$ "
+    export PS1="\$(basename \${KUBECONFIG}) \h:\W \u\$ "
 
-# TODO
+# Usage
 
-* bash completion
-* list available contexts
-* command to save current config if it isn't a symlink
+Once `ktx` is installed you can use it as autocomplete:
+
+    # useful to see what clusters you have in ${HOME}/.kube/
+    $ ktx <tab><tab>
+    alpha beta gamma delta epsilon
+    $ ktx gamma
+    export KUBECONFIG=/home/you/.kube/gamma
+    # Actually set the environment variable
+    $ eval $(ktx gamma)
