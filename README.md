@@ -32,13 +32,13 @@ Since you may want several environments (terminals) configured for different clu
 
 ## PS1
 
-It is very helpful to have your command prompt display which cluster is active. Add `\$(basename \${KUBECONFIG})` to your `${PS1}` (in your `${HOME}/.bash_profile`) to enable this feature.
+It is very helpful to have your command prompt display which cluster is active. Add `\$(basename \${KUBECONFIG:=""})` to your `${PS1}` (in your `${HOME}/.bash_profile`) to enable this feature.
 
 Note: The backslashes are very important. This tells bash to re-evaluate every time instead of once on load.
 
 Here is a sample:
 
-    export PS1="\$(basename \${KUBECONFIG}) \h:\W \u\$ "
+    export PS1="\$(basename \${KUBECONFIG:=\"\"}) \h:\W \u\$ "
 
 # Usage
 
