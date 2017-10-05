@@ -1,55 +1,85 @@
-# How it works
+# ktx
 
-The idea is to keep one cluster in one kubernetes config file and have an easy way to switch between clusters.
+## Overview
 
-Since you may want several environments (terminals) configured for different clusters we want to use the `KUBECONFIG` environment variable to identify the configured cluster.
+Managing kubeconfig files can become tedious when you have multiple clusters and contexts to switch between. `ktx` aims to reduce friction caused by switching between various configurations.
 
-# Installation
+`ktx` takes the approach of modifying the `KUBECONFIG` environment variable to select the desired config.
 
-## Prerequisites
+## Getting Started
 
-0. Your shell is bash.
-1. `${HOME}/bin` exists and is in your `${PATH}`.
-2. You have `curl` installed
-3. You have `git` installed
+### Prerequisites
 
-## From github
+* Your shell is bash.
+* `${HOME}/bin` exists and is in your `${PATH}`.
+* `git` is installed.
 
-    # clone this repo
-    git clone https://github.com/heptio/ktx
-    cd ktx
+### Install
 
-    # Install the script
-    install ktx ${HOME}/bin
+```sh
+# clone the ktx repo
+git clone https://github.com/heptio/ktx
+cd ktx
 
-    # Install the autocompletion
-    cp ktx-completion.sh ${HOME}/.ktx-completion.sh
-    # Add this to your `${HOME}/.bash_profile
-    source ${HOME}/.ktx-completion.sh
+# Install the script
+install ktx "${HOME}"/bin
 
-    # Reload your shell
-    exec bash
+# Install the autocompletion
+cp ktx-completion.sh "${HOME}"/.ktx-completion.sh
 
-## PS1
+# Add this to your "${HOME}/".bash_profile (or similar)
+source "${HOME}"/.ktx-completion.sh'
 
-It is very helpful to have your command prompt display which cluster is active. Add `\$(basename \${KUBECONFIG:=""})` to your `${PS1}` (in your `${HOME}/.bash_profile`) to enable this feature.
+# Reload your shell
+exec bash
+```
 
-Note: The backslashes are very important. This tells bash to re-evaluate every time instead of once on load.
-
-Here is a sample:
-
-    export PS1="\$(basename \${KUBECONFIG:=\"\"}) \h:\W \u\$ "
-
-# Usage
+### Usage
 
 Once `ktx` is installed you can use it as autocomplete:
 
-    # useful to see what clusters you have in ${HOME}/.kube/
-    $ ktx <tab><tab>
-    alpha beta gamma delta epsilon
-    $ ktx gamma
-    export KUBECONFIG=/home/you/.kube/gamma
-    # Actually set the environment variable
-    $ eval $(ktx gamma)
+```sh
+$ kubectl get po
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+# useful to see what clusters you have in ${HOME}/.kube/
+$ ktx <tab><tab>
+alpha beta gamma delta epsilon
+$ ktx gamma
+export KUBECONFIG=/home/you/.kube/gamma
+# Set the environment variable
+$ eval $(ktx gamma)
+$ kubectl get po
+No resources found.
+```
 
-# TODO: Document how to customize
+## Optional Bells & Whistles
+
+### PS1
+
+It is helpful to display the active cluster in the command prompt.
+
+![shows the cluster name in the command prompt](/ss.png?raw=true "ktx in action")
+
+### Steps
+
+1. Find out what the current value of `PS1`: `echo "${PS1}"`
+2. Put `"\$(basename \${KUBECONFIG:=\"\"})" ` in front of the existing value of `PS1`
+
+Note: The backslashes are very important. This tells bash to re-evaluate every time instead of once on load.
+
+### Example
+
+```sh
+salazar:ktx cha$ echo "${PS1}"
+\h:\W \u$
+
+# inside .bash_profile
+export PS1="\$(basename \${KUBECONFIG:=\"\"}) \h:\W \u$ "
+
+# Reload your shell
+exec bash
+```
+
+# Pronunciation Guide
+
+`ktx` is pronounced as "k thanks"
