@@ -17,6 +17,6 @@
 KUBECONFIG_DIR=${KUBECONFIG_DIR:-"${HOME}/.kube/"}
 _ktx() {
        local cur=${COMP_WORDS[COMP_CWORD]}
-       COMPREPLY=( $(compgen -W "$(ls ${KUBECONFIG_DIR})" -- $cur) )
+       COMPREPLY=( $(compgen -W "$(find ${KUBECONFIG_DIR} -maxdepth 1 -type f -exec basename {} \;)" -- $cur) )
 }
 complete -F _ktx ktx
