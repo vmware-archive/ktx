@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 KUBECONFIG_DIR=${KUBECONFIG_DIR:-"${HOME}/.kube/"}
 
 _getconf()
