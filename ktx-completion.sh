@@ -14,9 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 KUBECONFIG_DIR=${KUBECONFIG_DIR:-"${HOME}/.kube/"}
+
+_getconf()
+{
+	find ${KUBECONFIG_DIR} -maxdepth 1 -type f -exec basename {} \;
+}
+
 _ktx() {
        local cur=${COMP_WORDS[COMP_CWORD]}
-       COMPREPLY=( $(compgen -W "$(find ${KUBECONFIG_DIR} -maxdepth 1 -type f -exec basename {} \;)" -- $cur) )
+       COMPREPLY=( $(compgen -W "$(_getconf)" -- $cur) )
 }
 complete -F _ktx ktx
