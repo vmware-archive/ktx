@@ -28,7 +28,7 @@ install ktx "${HOME}"/bin
 cp ktx-completion.sh "${HOME}"/.ktx-completion.sh
 
 # Add this to your "${HOME}/".bash_profile (or similar)
-source "${HOME}"/.ktx-completion.sh'
+source "${HOME}"/.ktx-completion.sh
 
 # Reload your shell
 exec bash
