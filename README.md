@@ -24,7 +24,7 @@ cd ktx
 # Install the script
 install ktx "${HOME}"/bin
 
-# Install the autocompletion
+# Install the auto-completion
 cp ktx-completion.sh "${HOME}"/.ktx-completion.sh
 
 # Add this to your "${HOME}/".bash_profile (or similar)
@@ -36,7 +36,7 @@ exec bash
 
 ### Usage
 
-Once `ktx` is installed you can use it as autocomplete:
+Once `ktx` is installed you can use it as auto-complete:
 
 ```sh
 $ kubectl get po
