@@ -15,12 +15,24 @@
 # limitations under the License.
 
 main() {
-    if [ -e "${HOME}/.kube/${1}" ];then
+    # Test that we have a $HOME/.kube to work with
+    if [ ! -d "${HOME}/.kube" ]; then
+        echo "echo \"The following directory does not exist: ${HOME}/.kube. Exiting...\""
+        exit 1
+    fi
+
+    # Verify our $HOME/.kube isn't empty
+    if [ -z "$(ls -A ${HOME}/.kube)" ]; then
+        echo "echo \"No configs present in ${HOME}/.kube. Exiting...\""
+        exit 1
+    fi
+
+    # Verify config exists
+    if [ -e "${HOME}/.kube/${1}" ]; then
         echo "export KUBECONFIG=\"${HOME}/.kube/${1}\""
     else
-    # We need to echo out an additional echo command so that when ktx is run through eval
-    # the output is in the appropriate format to be sent to the console.
         echo "echo \"The following file does not exist: ${HOME}/.kube/${1}. Exiting...\""
+        exit 1
     fi
 }
 main ${1}
