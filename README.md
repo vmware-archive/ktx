@@ -11,7 +11,6 @@ Managing kubeconfig files can become tedious when you have multiple clusters and
 ### Prerequisites
 
 * Your shell is bash.
-* `${HOME}/bin` exists and is in your `${PATH}`.
 * `git` is installed.
 
 ### Install
@@ -21,8 +20,11 @@ Managing kubeconfig files can become tedious when you have multiple clusters and
 git clone https://github.com/heptio/ktx
 cd ktx
 
-# Install the script
-install ktx "${HOME}"/bin
+# Install the bash function
+cp ktx "${HOME}"/.ktx
+
+# Add this to your "${HOME}/".bash_profile (or similar)
+source "${HOME}"/.ktx
 
 # Install the auto-completion
 cp ktx-completion.sh "${HOME}"/.ktx-completion.sh
@@ -45,9 +47,6 @@ The connection to the server localhost:8080 was refused - did you specify the ri
 $ ktx <tab><tab>
 alpha beta gamma delta epsilon
 $ ktx gamma
-export KUBECONFIG=/home/you/.kube/gamma
-# Set the environment variable
-$ eval $(ktx gamma)
 $ kubectl get po
 No resources found.
 ```
