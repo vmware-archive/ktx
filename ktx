@@ -18,19 +18,19 @@ ktx() {
     # Test that we have a $HOME/.kube to work with
     if [ ! -d "${HOME}/.kube" ]; then
         echo "echo \"The following directory does not exist: ${HOME}/.kube. Exiting...\""
-        exit 1
+        return 1
     fi
 
     # Verify our $HOME/.kube isn't empty
     if [ -z "$(ls -A ${HOME}/.kube)" ]; then
         echo "echo \"No configs present in ${HOME}/.kube. Exiting...\""
-        exit 1
+        return 1
     fi
 
     # If no argument was given then list the files in $HOME/.kube
     if [ -z "$1" ]; then
       find "${HOME}/.kube" -maxdepth 1 -type f -exec basename {} \;
-      return;
+      return
     fi
 
     # Verify config exists
@@ -38,6 +38,6 @@ ktx() {
         export KUBECONFIG="${HOME}/.kube/${1}"
     else
         echo "echo \"The following file does not exist: ${HOME}/.kube/${1}. Exiting...\""
-        exit 1
+        return 1
     fi
 }
