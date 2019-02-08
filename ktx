@@ -33,6 +33,12 @@ ktx() {
       return;
     fi
 
+    # If argument is "None" then unset the KUBECONFIG variable
+    if [ "$1" == "none" ] || [ "$1" == "None" ]; then
+        unset KUBECONFIG
+        return
+    fi
+
     # Verify config exists
     if [ -e "${HOME}/.kube/${1}" ]; then
         export KUBECONFIG="${HOME}/.kube/${1}"
