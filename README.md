@@ -10,7 +10,7 @@ Managing kubeconfig files can become tedious when you have multiple clusters and
 
 ### Prerequisites
 
-* Your shell is bash.
+* Your shell is bash or zsh.
 * `git` is installed.
 
 ### Install
