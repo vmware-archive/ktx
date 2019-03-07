@@ -34,7 +34,7 @@ ktx() {
     fi
 
     # If argument is "None" then unset the KUBECONFIG variable
-    if [ "$1" = "none" ] || [ "$1" = "None" ]; then
+    if [[ "$1" == "none" ]] || [[ "$1" == "None" ]]; then
         unset KUBECONFIG
         return
     fi
