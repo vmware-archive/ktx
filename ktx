@@ -29,7 +29,7 @@ ktx() {
 
     # If no argument was given then list the files in $HOME/.kube
     if [ -z "$1" ]; then
-      for kube in $(find "${HOME}/.kube" -maxdepth 1 -type f); do
+      for kube in $(find "${HOME}/.kube" -maxdepth 1 -type f -o -type l); do
         if [[ "${KUBECONFIG}" == "$kube" ]]; then
           echo -n "(active) "
         fi
