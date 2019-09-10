@@ -16,8 +16,8 @@ Managing kubeconfig files can become tedious when you have multiple clusters and
 ### Install
 
 ```sh
-# clone the ktx repo
-git clone https://github.com/heptio/ktx
+# Clone the ktx repo
+git clone https://github.com/heptiolabs/ktx
 cd ktx
 
 # Install the bash function
