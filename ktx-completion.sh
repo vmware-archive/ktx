@@ -19,6 +19,7 @@ KUBECONFIG_DIR=${KUBECONFIG_DIR:-"${HOME}/.kube/"}
 _getconf()
 {
        find ${KUBECONFIG_DIR} -maxdepth 1 \( -type f -o -type l \) -exec basename {} \;
+       echo "none"
 }
 
 _ktx() {

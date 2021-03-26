@@ -29,12 +29,28 @@ ktx() {
 
     # If no argument was given then list the files in $HOME/.kube
     if [ -z "$1" ]; then
+      ch="none\n"
       for kube in $(find "${HOME}/.kube" -maxdepth 1 -type f -o -type l); do
         if [[ "${KUBECONFIG}" == "$kube" ]]; then
-          echo -n "(active) "
+          ch="$ch(active) "
         fi
-        echo $(basename "${kube}")
+        ch=${ch}$(basename "${kube}")"\n"
       done
+
+      # if fzf is installed, use it to choose the context
+      if type fzf &>/dev/null ; then
+        choice=$(echo $ch | fzf)
+      else
+        echo -n $ch
+        return
+      fi
+      if [ ! -z "$choice" ] ; then
+        if [[ "$choice" == "none" ]] || [[ "$choice" == "None" ]]; then
+          unset KUBECONFIG
+          return
+        fi
+        export KUBECONFIG="${HOME}/.kube/${choice}"
+      fi
 
       return
     fi
