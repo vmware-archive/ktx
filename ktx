@@ -14,22 +14,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+KUBECONFIG_DIR=${KUBECONFIG_DIR:-"${HOME}/.kube/"}
+
 ktx() {
-    # Test that we have a $HOME/.kube to work with
-    if [ ! -d "${HOME}/.kube" ]; then
-        echo "echo \"The following directory does not exist: ${HOME}/.kube. Exiting...\""
+    # Test that we have a ${KUBECONFIG_DIR} to work with
+    if [ ! -d "${KUBECONFIG_DIR}" ]; then
+        echo "echo \"The following directory does not exist: ${KUBECONFIG_DIR}. Exiting...\""
         return 1
     fi
 
-    # Verify our $HOME/.kube isn't empty
-    if [ -z "$(ls -A ${HOME}/.kube)" ]; then
-        echo "echo \"No configs present in ${HOME}/.kube. Exiting...\""
+    # Verify our ${KUBECONFIG_DIR} isn't empty
+    if [ -z "$(ls -A ${KUBECONFIG_DIR})" ]; then
+        echo "echo \"No configs present in ${KUBECONFIG_DIR}. Exiting...\""
         return 1
     fi
 
-    # If no argument was given then list the files in $HOME/.kube
+    # If no argument was given then list the files in ${KUBECONFIG_DIR}
     if [ -z "$1" ]; then
-      for kube in $(find "${HOME}/.kube" -maxdepth 1 -type f -o -type l); do
+      for kube in $(find "${KUBECONFIG_DIR}" -maxdepth 1 -type f -o -type l); do
         if [[ "${KUBECONFIG}" == "$kube" ]]; then
           echo -n "(active) "
         fi
@@ -46,10 +48,10 @@ ktx() {
     fi
 
     # Verify config exists
-    if [ -e "${HOME}/.kube/${1}" ]; then
-        export KUBECONFIG="${HOME}/.kube/${1}"
+    if [ -e "${KUBECONFIG_DIR}/${1}" ]; then
+        export KUBECONFIG="${KUBECONFIG_DIR}/${1}"
     else
-        echo "echo \"The following file does not exist: ${HOME}/.kube/${1}. Exiting...\""
+        echo "echo \"The following file does not exist: ${KUBECONFIG_DIR}/${1}. Exiting...\""
         return 1
     fi
 }
